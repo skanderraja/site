@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freelancer Guide | Your Path to Online Income</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d0d0d; --surface: #161616; --card: #1e1e1e;
+      --border: #2a2a2a; --accent: #1a8cff; --accent2: #e07b39;
+      --text: #f0ece4; --text-muted: #888; --text-dim: #555;
+      --shadow: rgba(0,0,0,0.6);
+    }
+    body.light {
+      --bg: #f4f4f4; --surface: #ffffff; --card: #ffffff;
+      --border: #e0e0e0; --accent: #1a6fe8; --accent2: #c0601a;
+      --text: #1a1a1a; --text-muted: #555; --text-dim: #999;
+      --shadow: rgba(0,0,0,0.1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); transition: background 0.4s, color 0.4s; line-height: 1.75; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 14px 40px; gap: 20px; }
+    .nav-logo { font-size: 1.15rem; font-weight: 800; color: var(--accent); white-space: nowrap; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .theme-btn { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 7px 18px; border-radius: 30px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.3s; }
+    .theme-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* HERO */
+    .hero { min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 20px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(26,140,255,0.08) 0%, transparent 70%); pointer-events: none; }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.2; max-width: 820px; margin-bottom: 22px; }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub { font-size: 1rem; color: var(--text-muted); max-width: 540px; margin-bottom: 36px; }
+    .hero-cta { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; padding: 14px 34px; border-radius: 4px; text-decoration: none; font-size: 0.9rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,140,255,0.35); }
+
+    /* PROFILE */
+    #profile { display: flex; flex-direction: column; align-items: center; padding: 56px 20px; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .profile-frame { width: 130px; height: 130px; border-radius: 50%; border: 3px solid var(--accent); overflow: hidden; background: var(--card); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; cursor: pointer; transition: box-shadow 0.3s; }
+    .profile-frame:hover { box-shadow: 0 0 0 6px rgba(26,140,255,0.15); }
+    .profile-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .profile-placeholder { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-muted); }
+    .profile-placeholder svg { width: 38px; height: 38px; opacity: 0.4; }
+    .profile-placeholder span { font-size: 0.65rem; opacity: 0.5; }
+    .profile-upload-input { display: none; }
+    .profile-label { font-size: 0.76rem; color: var(--accent); cursor: pointer; margin-top: 4px; text-decoration: underline; }
+    .profile-name { font-size: 1.4rem; font-weight: 700; margin-top: 10px; }
+    .profile-bio { color: var(--text-muted); font-size: 0.9rem; max-width: 460px; text-align: center; margin-top: 6px; }
+
+    /* STATS */
+    .stats { display: flex; justify-content: center; gap: 50px; padding: 50px 20px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 2.2rem; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; font-weight: 500; }
+
+    /* SECTION HEADER */
+    .section-wrap { max-width: 900px; margin: 0 auto; padding: 60px 20px 20px; }
+    .section-header { margin-bottom: 36px; }
+    .section-eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: inline-block; background: rgba(26,140,255,0.1); padding: 3px 10px; border-radius: 2px; }
+    .section-header h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 800; }
+
+    /* BLOG LIST */
+    .blog-list { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    .blog-post { border-bottom: 1px solid var(--border); padding: 32px 0; }
+    .blog-post:last-child { border-bottom: none; }
+    .blog-post-meta { display: flex; align-items: center; gap: 18px; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; flex-wrap: wrap; }
+    .blog-post-meta svg { width: 14px; height: 14px; }
+    .blog-post-meta span { display: flex; align-items: center; gap: 5px; }
+    .blog-post h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 10px; line-height: 1.4; cursor: pointer; transition: color 0.2s; }
+    .blog-post h2:hover { color: var(--accent); }
+    .blog-post p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 18px; max-width: 700px; }
+    .read-more-btn { display: inline-block; background: var(--accent); color: #fff; font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 22px; border-radius: 3px; cursor: pointer; border: none; transition: opacity 0.2s; }
+    .read-more-btn:hover { opacity: 0.85; }
+
+    /* PAGINATION */
+    .pagination-wrap { max-width: 900px; margin: 0 auto; padding: 40px 20px 20px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .pg-btn { min-width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 3px; font-size: 0.88rem; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s; background: var(--card); color: var(--text); border: 1px solid var(--border); }
+    .pg-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .pg-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .pg-btn.next { padding: 0 18px; background: var(--card); }
+
+    /* CONTACT FORM */
+    #contact { max-width: 900px; margin: 0 auto; padding: 50px 20px 70px; }
+    .contact-label { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #fff; background: var(--accent); padding: 5px 14px; border-radius: 2px; margin-bottom: 24px; }
+    .contact-form { display: flex; flex-direction: column; gap: 14px; max-width: 600px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); padding: 11px 14px; border-radius: 4px;
+      font-size: 0.88rem; font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s; outline: none; width: 100%;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus { border-color: var(--accent); }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: var(--text-dim); }
+    .contact-form textarea { resize: vertical; min-height: 100px; }
+    .form-submit { background: var(--accent); color: #fff; border: none; padding: 12px 32px; border-radius: 4px; font-size: 0.88rem; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; transition: opacity 0.2s; align-self: flex-start; }
+    .form-submit:hover { opacity: 0.88; }
+    .form-success { display: none; background: rgba(26,200,100,0.1); border: 1px solid rgba(26,200,100,0.3); color: #2dc76d; padding: 12px 18px; border-radius: 4px; font-size: 0.88rem; font-weight: 600; }
+    .form-error { display: none; background: rgba(255,60,60,0.1); border: 1px solid rgba(255,60,60,0.3); color: #ff4d4d; padding: 12px 18px; border-radius: 4px; font-size: 0.88rem; font-weight: 600; }
+    .field-error { border-color: #ff4d4d !important; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); background: #111; text-align: center; padding: 36px 20px; }
+    footer p { font-size: 0.78rem; color: var(--text-dim); }
+    footer span { color: var(--accent); }
+
+    /* MODAL */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--card); border: 1px solid var(--border); border-radius: 8px; max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 36px; position: relative; animation: fadeUp 0.3s ease; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .modal-close { position: sticky; top: 0; float: right; background: var(--surface); border: 1px solid var(--border); color: var(--text); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .modal-close:hover { background: var(--accent); color: #fff; }
+    .modal h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 16px; line-height: 1.4; }
+    .modal-meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 18px; }
+    .modal p { font-size: 0.91rem; color: var(--text-muted); line-height: 2; }
+
+    .reveal { opacity:0; transform:translateY(20px); transition: opacity 0.5s, transform 0.5s; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    @media(max-width:640px) {
+      nav { padding: 12px 16px; }
+      .nav-links { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .stats { gap: 24px; }
+      .modal { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">💡 Freelancer Guide</div>
+  <ul class="nav-links">
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#blog">Articles</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Mode</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Online Earning Guide — For Everyone</p>
+  <h1>Start Earning <span>Dollars</span> with Freelancing</h1>
+  <p class="hero-sub">Work from home, build your career, and achieve financial freedom — one skill at a time.</p>
+  <a href="#blog" class="hero-cta">Browse Articles →</a>
+</section>
+
+<!-- PROFILE -->
+<section id="profile">
+  <div class="profile-frame" onclick="document.getElementById('photoInput').click()">
+    <img id="profileImg" src="pic.svg" alt="Profile Photo" onerror="this.style.display='none';document.getElementById('profilePlaceholder').style.display='flex';" />
+    <div class="profile-placeholder" id="profilePlaceholder" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+      <span>Add Photo</span>
+    </div>
+  </div>
+  <input type="file" id="photoInput" class="profile-upload-input" accept="image/*" onchange="uploadPhoto(event)" />
+  <label for="photoInput" class="profile-label">📷 Upload Your Photo</label>
+  <div class="profile-name">Your Name Here</div>
+  <p class="profile-bio">Freelancer | Content Writer | Digital Marketer — Welcome to the world of online earning</p>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item reveal"><div class="stat-num">10+</div><div class="stat-label">Guide Articles</div></div>
+  <div class="stat-item reveal"><div class="stat-num">$500+</div><div class="stat-label">Possible Monthly Income</div></div>
+  <div class="stat-item reveal"><div class="stat-num">5</div><div class="stat-label">Freelancing Platforms</div></div>
+  <div class="stat-item reveal"><div class="stat-num">100%</div><div class="stat-label">Work From Home</div></div>
+</div>
+
+<!-- BLOG SECTION HEADER -->
+<div class="section-wrap reveal" id="blog">
+  <div class="section-header">
+    <span class="section-eyebrow">Freelancing &amp; Jobs</span>
+    <h2>Latest Articles on Earning Online</h2>
+  </div>
+</div>
+
+<!-- BLOG LIST -->
+<div class="blog-list" id="blogList"></div>
+
+<!-- PAGINATION -->
+<div class="pagination-wrap" id="pagination"></div>
+
+<!-- CONTACT FORM -->
+<section id="contact">
+  <span class="contact-label">LINKS & CONTACT</span>
+  <div class="contact-form">
+    <div class="form-row">
+      <input type="text" id="fname" placeholder="Your Name" />
+      <input type="email" id="femail" placeholder="Your Email (e.g. name@gmail.com)" />
+    </div>
+    <div class="form-row">
+      <input type="tel" id="fphone" placeholder="Phone Number " />
+      <input type="text" id="fsubject" placeholder="Subject" />
+    </div>
+    <textarea id="fmessage" placeholder="Your message..."></textarea>
+    <button class="form-submit" onclick="submitForm()">Send Message</button>
+    <div class="form-error" id="formError"></div>
+    <div class="form-success" id="formSuccess">✅ Message sent successfully! We'll get back to you soon.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Made with <span>❤️</span> | Freelancer Guide © 2026</p>
+  <p style="margin-top:6px;">Contact: <span>yourname@email.com</span> &nbsp;|&nbsp; <span>About Us</span> &nbsp;|&nbsp; <span>Privacy Policy</span></p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <h2 id="modalTitle"></h2>
+    <div class="modal-meta" id="modalMeta"></div>
+    <p id="modalBody"></p>
+  </div>
+</div>
+
+<script>
+  // THEME
+  let isLight = false;
+  function toggleTheme() {
+    isLight = !isLight;
+    document.body.classList.toggle('light', isLight);
+    document.getElementById('themeBtn').textContent = isLight ? '🌙 Dark Mode' : '☀️ Light Mode';
+  }
+
+  // PHOTO
+  function uploadPhoto(e) {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.getElementById('profileImg');
+      img.src = ev.target.result; img.style.display = 'block';
+      document.getElementById('profilePlaceholder').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ARTICLES DATA — updated dates to 2026
+  const allArticles = [
+    { date:'January 28, 2026', author:'saffiikhan', title:'How to Earn Money on Fiverr — Complete Beginner Guide', excerpt:'Fiverr is the world\'s largest freelancing marketplace where you can sell any skill and get paid in dollars. Whether it\'s writing, design, or video editing — there\'s a buyer waiting for you.', full:'To succeed on Fiverr, start by building a professional profile. Add a clear photo, write a compelling bio, and list your skills. Then create at least 3 to 5 Gigs that describe your services in detail.\n\nChoose a Gig title that includes searchable keywords — for example, "I will write SEO blog articles for your website." Keep prices low at first to attract your first reviews. Once reviews come in, gradually raise your rates.\n\nBeginners typically earn $50–$200 per month. Experienced sellers with strong profiles can earn $1,000+ monthly.' },
+    { date:'January 25, 2026', author:'saffiikhan', title:'How to Land Your First Job on Upwork in 2026', excerpt:'Upwork is the go-to platform for larger projects and long-term contracts. Clients are verified and payments are fully secured through the platform — making it safe and reliable.', full:'The secret to success on Upwork is writing a strong proposal. Whenever you see a job posting, do not just list your services — understand the client\'s problem and offer a clear solution.\n\nSpend your Connects wisely — apply to 2–3 well-matched jobs each day. A portfolio is essential. If you don\'t have previous work, create sample projects to showcase your abilities.\n\nUpwork offers both Hourly and Fixed-Price projects. Fixed-Price contracts are easier to land when starting out. Build a strong profile with good ratings and the jobs will come to you.' },
+    { date:'January 20, 2026', author:'saffiikhan', title:'Content Writing — Earn From Home With Your Words', excerpt:'If you write well in English, content writing is a golden opportunity. Businesses constantly need blog posts, website copy, and social media content — and they pay well for quality work.', full:'To succeed in content writing, you need a basic understanding of SEO. Learn how to naturally include keywords, structure articles with headings, and write engaging introductions.\n\nFind work on Fiverr, Upwork, and Freelancer.com. Many companies also post remote writing jobs on LinkedIn and Indeed.\n\nBeginners earn $5–$15 per 1,000-word article. As your experience grows, you can charge $30–$50 per article or more for specialized niches like technology, finance, or health.' },
+    { date:'January 15, 2026', author:'saffiikhan', title:'How to Use LinkedIn to Find Remote Jobs Worldwide', excerpt:'LinkedIn is not just for networking — it is a powerful tool for finding international remote jobs and getting discovered by recruiters from top companies around the world.', full:'Building a professional LinkedIn profile is your first step. Use a clear photo and write a strong Headline such as "Graphic Designer | Brand Identity Expert."\n\nWrite a detailed About section. Fill out the Skills section completely. Then go to LinkedIn Jobs and apply the "Remote" filter to find work-from-home positions.\n\nConnect with people in your field and post useful content regularly to increase your visibility. With a strong profile, recruiters will start reaching out to you directly.' },
+    { date:'January 10, 2026', author:'saffiikhan', title:'Graphic Design — Sell Your Creativity and Earn Online', excerpt:'Learn Canva, Photoshop, or Illustrator and start designing logos, banners, and social media posts for clients around the world — no degree required.', full:'To earn from graphic design online, you first need a portfolio. Create 5–10 sample designs — logos, business cards, social media graphics — even if they are for fictional brands.\n\nCreate Gigs on Fiverr for Logo Design, Business Cards, and Social Media Packages. Start at a lower price to collect reviews, then increase rates as your reputation grows.\n\nA professional logo can sell for $50–$200. By completing 10 logos per month, you can realistically earn $500–$1,000. Learn for free on YouTube channels like Gareth David Studio or Piximperfect.' },
+    { date:'January 5, 2026', author:'saffiikhan', title:'YouTube — Build a Channel and Earn Consistently', excerpt:'YouTube is not just entertainment — it is a full-scale business. Choose the right niche and you can earn thousands of dollars every single month from the comfort of your home.', full:'To earn on YouTube, pick one specific niche you are passionate about and knowledgeable in — cooking, technology, finance, or freelancing tips.\n\nYou become eligible for monetization after reaching 1,000 subscribers and 4,000 hours of watch time. Beyond ad revenue, earn through sponsorships, affiliate marketing, and selling your own products or courses.\n\nPost consistently — aim for 2–3 videos per week. Make thumbnails eye-catching and titles keyword-rich. Results typically take 4–6 months to show but the income can grow significantly over time.' },
+    { date:'December 28, 2025', author:'saffiikhan', title:'Data Entry Jobs — The Easiest Way to Start Online', excerpt:'No special skills? No problem. Start with data entry. It is beginner-friendly, can be done entirely from home, and is widely available on all major freelancing platforms right now.', full:'In data entry work, you type information into spreadsheets, fill out online forms, or transfer data between systems for businesses that need organised records.\n\nAll you need is a decent typing speed and a reliable internet connection. Fiverr, Upwork, and Freelancer.com all have many data entry listings.\n\nBeginners typically earn $3–$8 per hour. With experience, this can rise to $10–$15 per hour. Data entry is an excellent starting point — it helps you build confidence and discipline while you develop more specialised skills.' },
+    { date:'December 20, 2025', author:'saffiikhan', title:'Web Development — The Highest-Paying Freelance Skill', excerpt:'Learn HTML, CSS, and JavaScript and start building websites for clients. Web development is the most in-demand and highest-paying freelance skill available in the market today.', full:'Your journey begins with HTML and CSS. Free resources are everywhere — freeCodeCamp, The Odin Project, and YouTube channels like Traversy Media offer complete courses at no cost.\n\nAfter 3–6 months of learning, start on Fiverr or Upwork. Building WordPress websites is a great entry point because it requires less custom coding while still delivering professional results.\n\nA basic website can sell for $150–$500. E-commerce stores go for $500–$2,000 or more. Consistent learning and a growing portfolio can take your monthly income well above $1,000 within a year.' },
+    { date:'December 15, 2025', author:'saffiikhan', title:'Online Tutoring — Teach What You Know and Get Paid', excerpt:'Are you good at math, English, or science? Teach students online and earn a steady, reliable income from the comfort of your home — on your own schedule.', full:'For online tutoring, use platforms like Preply, italki, or Tutor.com to connect with students globally. These platforms handle scheduling and payments so you can focus on teaching.\n\nStart by tutoring local students at a lower rate to build your reviews and confidence. Once you have a solid rating, attract international students who pay significantly more.\n\nTeaching English as a second language pays $10–$25 per hour on international platforms. Math and science tutors also earn well. This is one of the most stable sources of recurring monthly income.' },
+    { date:'December 10, 2025', author:'saffiikhan', title:'Affiliate Marketing — Earn While You Sleep', excerpt:'Affiliate marketing lets you earn commissions by recommending products online. Once set up, your content works for you 24/7 — generating passive income even while you sleep.', full:'Affiliate marketing means promoting other companies\' products and earning a commission for every sale made through your unique link.\n\nStart a blog or YouTube channel in a specific niche — technology, fitness, finance. Sign up for affiliate programs like Amazon Associates, ShareASale, or ClickBank. Create helpful content that naturally mentions products you recommend.\n\nEarnings vary widely. Beginners make $50–$200 per month. Established affiliate marketers earn $2,000–$10,000+ monthly. The key is building an audience first, then monetizing. Be patient — it typically takes 6–12 months to see significant income.' },
+    { date:'December 5, 2025', author:'saffiikhan', title:'Social Media Management — Get Paid to Manage Pages', excerpt:'Businesses need someone to run their Facebook, Instagram, and TikTok pages. If you understand social media, this is an easy and flexible way to earn from home.', full:'Social media managers create posts, respond to comments, schedule content, and grow followers for businesses. You do not need a degree — just creativity and consistency.\n\nLearn the basics of content creation using Canva and Buffer. Offer your services on Fiverr starting at $50–$100 per month per account.\n\nAs you gain experience and results, you can manage multiple accounts and charge $200–$500 per account per month. Many beginners turn this into a full-time career within 6 months.' },
+    { date:'November 28, 2025', author:'saffiikhan', title:'Voice Over Work — Earn with Your Voice Online', excerpt:'Do you have a clear and pleasant voice? Voice over artists are in high demand for YouTube videos, commercials, e-learning courses, and audiobooks — and they earn well.', full:'Voice over work requires a decent microphone and a quiet recording space. You don\'t need a professional studio — a small room with soft furnishings works well for beginners.\n\nCreate a profile on Voices.com, Voice123, or Fiverr. Upload sample recordings to showcase your tone and style. Start with smaller projects like YouTube intros and podcast ads.\n\nBeginners earn $50–$150 per project. Experienced voice artists with a strong portfolio earn $500–$2,000 per project for commercial work. This is an excellent skill that can be monetized from day one.' },
+    { date:'November 20, 2025', author:'saffiikhan', title:'Virtual Assistant — The Remote Job Everyone Can Do', excerpt:'Virtual assistants help businesses with emails, scheduling, research, and admin tasks. It is one of the most flexible and in-demand remote jobs available worldwide.', full:'As a virtual assistant, you handle tasks that busy professionals do not have time for — managing inboxes, booking appointments, data research, customer support, and more.\n\nNo special degree is needed. Strong communication skills, reliability, and basic computer knowledge are your main assets. Start on Upwork, Fiverr, or Freelancer.com.\n\nEntry-level VAs earn $5–$10 per hour. Specialized VAs who handle social media, bookkeeping, or project management earn $15–$30 per hour. This is an ideal job to start immediately while learning other skills.' },
+    { date:'November 15, 2025', author:'saffiikhan', title:'Dropshipping — Start an Online Store With No Inventory', excerpt:'Dropshipping lets you sell products online without ever holding stock. You list items, customers buy, and the supplier ships directly — you keep the profit margin.', full:'To start dropshipping, choose a niche product category — phone accessories, fitness gear, or home decor. Use Shopify or WooCommerce to set up your store.\n\nFind suppliers on AliExpress or through apps like DSers. Set your prices with a 30–50% margin. Use Facebook Ads or TikTok Ads to drive traffic to your store.\n\nDropshipping is competitive but rewarding. Beginners can make $200–$500 per month with the right product. Successful stores earn $2,000–$10,000+ monthly. The key is finding winning products and testing quickly.' },
+  ];
+
+  // EMAIL VALIDATION — must be proper email format
+  function isValidEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+
+  // PHONE VALIDATION — basic check: digits, +, spaces, dashes, min 7 digits
+  function isValidPhone(phone) {
+    if (!phone) return true; // phone is optional
+    const digits = phone.replace(/\D/g, '');
+    return digits.length >= 7 && digits.length <= 15;
+  }
+
+  // PAGINATION — 7 articles per page, 26 total pages
+  const POSTS_PER_PAGE = 7;
+  const TOTAL_PAGES = 26;
+  let currentPage = 1;
+
+  function getPageArticles(page) {
+    const start = (page - 1) * POSTS_PER_PAGE;
+    return allArticles.slice(start, start + POSTS_PER_PAGE);
+  }
+
+  function renderBlog(page) {
+    const list = document.getElementById('blogList');
+    list.innerHTML = '';
+    const posts = getPageArticles(page);
+    const items = posts.length > 0 ? posts : Array.from({length: POSTS_PER_PAGE}, (_, i) => ({
+      date: 'Coming Soon', author: 'saffiikhan',
+      title: `Article ${(page-1)*POSTS_PER_PAGE + i + 1} — More Coming Soon`,
+      excerpt: 'We are working on more helpful articles about freelancing and online earning. Stay tuned for updates!',
+      full: 'This article is coming soon. We are working hard to bring you more valuable content about freelancing and online earning opportunities.'
+    }));
+
+    items.forEach((a, i) => {
+      const div = document.createElement('div');
+      div.className = 'blog-post reveal';
+      const realIdx = allArticles.indexOf(a);
+      const idx = realIdx >= 0 ? realIdx : 0;
+      div.innerHTML = `
+        <div class="blog-post-meta">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${a.date}</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>${a.author}</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</span>
+        </div>
+        <h2 onclick="openModal(${idx})">${a.title}</h2>
+        <p>${a.excerpt}</p>
+        <button class="read-more-btn" onclick="openModal(${idx})">READ MORE</button>
+      `;
+      list.appendChild(div);
+    });
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+  }
+
+  function renderPagination(page) {
+    const wrap = document.getElementById('pagination');
+    wrap.innerHTML = '';
+
+    // PREVIOUS button
+    const prev = document.createElement('button');
+    prev.className = 'pg-btn next';
+    prev.textContent = '← Prev';
+    prev.disabled = page === 1;
+    prev.style.opacity = page === 1 ? '0.4' : '1';
+    prev.style.cursor = page === 1 ? 'not-allowed' : 'pointer';
+    prev.onclick = () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderBlog(currentPage);
+        renderPagination(currentPage);
+        window.scrollTo({top: document.getElementById('blog').offsetTop - 80, behavior:'smooth'});
+      }
+    };
+    wrap.appendChild(prev);
+
+    // Show: 1, 2, 3, ..., 25, 26 with active state
+    let pages = [];
+    if (TOTAL_PAGES <= 7) {
+      for (let i = 1; i <= TOTAL_PAGES; i++) pages.push(i);
+    } else {
+      pages = [1, 2, 3];
+      if (page > 4) pages.push('...');
+      if (page > 3 && page < TOTAL_PAGES - 2) pages.push(page);
+      if (page > 3 && page + 1 < TOTAL_PAGES - 1) pages.push(page + 1);
+      if (TOTAL_PAGES - 2 > 3) pages.push('...');
+      pages.push(TOTAL_PAGES - 1, TOTAL_PAGES);
+      // Remove duplicates and sort
+      pages = [...new Set(pages)];
+    }
+
+    pages.forEach(p => {
+      const btn = document.createElement('button');
+      btn.className = 'pg-btn' + (p === page ? ' active' : '');
+      btn.textContent = p;
+      if (p !== '...') {
+        btn.onclick = () => { currentPage = p; renderBlog(p); renderPagination(p); window.scrollTo({top: document.getElementById('blog').offsetTop - 80, behavior:'smooth'}); };
+      } else {
+        btn.style.cursor = 'default';
+      }
+      wrap.appendChild(btn);
+    });
+
+    const next = document.createElement('button');
+    next.className = 'pg-btn next';
+    next.textContent = 'Next →';
+    next.disabled = page === TOTAL_PAGES;
+    next.style.opacity = page === TOTAL_PAGES ? '0.4' : '1';
+    next.style.cursor = page === TOTAL_PAGES ? 'not-allowed' : 'pointer';
+    next.onclick = () => {
+      if (currentPage < TOTAL_PAGES) {
+        currentPage++;
+        renderBlog(currentPage);
+        renderPagination(currentPage);
+        window.scrollTo({top: document.getElementById('blog').offsetTop - 80, behavior:'smooth'});
+      }
+    };
+    wrap.appendChild(next);
+  }
+
+  // MODAL
+  function openModal(i) {
+    const a = allArticles[i] || allArticles[0];
+    document.getElementById('modalTitle').textContent = a.title;
+    document.getElementById('modalMeta').innerHTML = `📅 ${a.date} &nbsp;·&nbsp; ✍️ ${a.author}`;
+    document.getElementById('modalBody').innerHTML = a.full.replace(/\n/g, '<br><br>');
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalBtn(); }
+  function closeModalBtn() { document.getElementById('modalOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+
+  // FORM SUBMIT WITH VALIDATION
+  function submitForm() {
+    const name    = document.getElementById('fname').value.trim();
+    const email   = document.getElementById('femail').value.trim();
+    const phone   = document.getElementById('fphone').value.trim();
+    const msg     = document.getElementById('fmessage').value.trim();
+    const errBox  = document.getElementById('formError');
+
+    // Clear previous errors
+    errBox.style.display = 'none';
+    errBox.textContent = '';
+    ['fname','femail','fphone','fmessage'].forEach(id => document.getElementById(id).classList.remove('field-error'));
+
+    let errors = [];
+
+    if (!name) {
+      errors.push('Name is required.');
+      document.getElementById('fname').classList.add('field-error');
+    }
+
+    if (!email) {
+      errors.push('Email is required.');
+      document.getElementById('femail').classList.add('field-error');
+    } else if (!isValidEmail(email)) {
+      errors.push('Please enter a valid email address (e.g. yourname@gmail.com).');
+      document.getElementById('femail').classList.add('field-error');
+    }
+
+    if (phone && !isValidPhone(phone)) {
+      errors.push('Please enter a valid phone number.');
+      document.getElementById('fphone').classList.add('field-error');
+    }
+
+    if (!msg) {
+      errors.push('Message is required.');
+      document.getElementById('fmessage').classList.add('field-error');
+    }
+
+    if (errors.length > 0) {
+      errBox.textContent = '⚠️ ' + errors.join(' ');
+      errBox.style.display = 'block';
+      return;
+    }
+
+    // Success
+    document.getElementById('formSuccess').style.display = 'block';
+    document.getElementById('fname').value = '';
+    document.getElementById('femail').value = '';
+    document.getElementById('fphone').value = '';
+    document.getElementById('fsubject').value = '';
+    document.getElementById('fmessage').value = '';
+    setTimeout(() => document.getElementById('formSuccess').style.display = 'none', 5000);
+  }
+
+  // SCROLL REVEAL
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); observer.unobserve(el.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // INIT
+  renderBlog(1);
+  renderPagination(1);
+</script>
+</body>
+</html>
