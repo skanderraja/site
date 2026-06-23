@@ -68,7 +68,7 @@
 
     /* BLOG LIST */
     .blog-list { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-    .blog-post { border-bottom: 1px solid var(--border); padding: 32px 0; }
+    .blog-post { border-bottom: 1px solid var(--border); padding: 20px 0; }
     .blog-post:last-child { border-bottom: none; }
     .blog-post-meta { display: flex; align-items: center; gap: 18px; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; flex-wrap: wrap; }
     .blog-post-meta svg { width: 14px; height: 14px; }
@@ -136,10 +136,55 @@
       .form-row { grid-template-columns: 1fr; }
       .stats { gap: 24px; }
       .modal { padding: 20px; }
+      .blog-post { padding: 14px 0; }
+      .blog-list { padding: 0 14px; }
     }
+
+    /* LOADING SCREEN */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0d0d0d;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-logo { font-size: 2rem; font-weight: 800; color: #1a8cff; letter-spacing: -1px; margin-bottom: 28px; animation: pulse 1.4s ease-in-out infinite; }
+    .loader-bar { width: 180px; height: 3px; background: #222; border-radius: 10px; overflow: hidden; }
+    .loader-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #1a8cff, #38cfff); border-radius: 10px; animation: fill 1.6s ease forwards; }
+    @keyframes fill { 0%{width:0%} 60%{width:80%} 100%{width:100%} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+    /* PAGE ENTER ANIMATION */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* NAV SCROLL SHADOW */
+    nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
+
+    /* HERO GRADIENT GLOW */
+    .hero { position: relative; overflow: hidden; }
+    .hero::after { content:''; position:absolute; bottom:-60px; left:50%; transform:translateX(-50%); width:500px; height:200px; background:radial-gradient(ellipse, rgba(26,140,255,0.12) 0%, transparent 70%); pointer-events:none; }
+
+    /* BLOG POST HOVER */
+    .blog-post { transition: transform 0.2s ease, box-shadow 0.2s ease; border-radius: 8px; padding-left: 10px; padding-right: 10px; }
+    .blog-post:hover { transform: translateX(4px); }
+
+    /* SCROLL TO TOP BUTTON */
+    #scrollTop { position: fixed; bottom: 28px; right: 22px; z-index: 500; width: 42px; height: 42px; border-radius: 50%; background: #1a8cff; color: #fff; border: none; font-size: 1.2rem; cursor: pointer; opacity: 0; transform: translateY(20px); transition: opacity 0.3s, transform 0.3s; box-shadow: 0 4px 16px rgba(26,140,255,0.4); display: flex; align-items: center; justify-content: center; }
+    #scrollTop.show { opacity: 1; transform: translateY(0); }
+    #scrollTop:hover { background: #0e70d4; }
   </style>
 </head>
-<body>
+<body class="light">
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">💡 Freelancer Guide</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- SCROLL TO TOP -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <!-- NAV -->
 <nav>
@@ -149,11 +194,11 @@
     <li><a href="#blog">Articles</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Mode</button>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero fade-in">
   <p class="hero-eyebrow">Online Earning Guide — For Everyone</p>
   <h1>Start Earning <span>Dollars</span> with Freelancing</h1>
   <p class="hero-sub">Work from home, build your career, and achieve financial freedom — one skill at a time.</p>
@@ -162,7 +207,7 @@
 
 <!-- PROFILE -->
 <section id="profile">
-  <div class="profile-frame" onclick="document.getElementById('photoInput').click()">
+  <div class="profile-frame">
     <img id="profileImg" src="pic.svg" alt="Profile Photo" onerror="this.style.display='none';document.getElementById('profilePlaceholder').style.display='flex';" />
     <div class="profile-placeholder" id="profilePlaceholder" style="display:none;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -171,8 +216,6 @@
       <span>Add Photo</span>
     </div>
   </div>
-  <input type="file" id="photoInput" class="profile-upload-input" accept="image/*" onchange="uploadPhoto(event)" />
-  <label for="photoInput" class="profile-label">📷 Upload Your Photo</label>
   <div class="profile-name">Your Name Here</div>
   <p class="profile-bio">Freelancer | Content Writer | Digital Marketer — Welcome to the world of online earning</p>
 </section>
@@ -235,8 +278,22 @@
 </div>
 
 <script>
+  // LOADER
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hide');
+      document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+    }, 1700);
+  });
+
+  // SCROLL TO TOP BUTTON
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 300);
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 10);
+  });
+
   // THEME
-  let isLight = false;
+  let isLight = true;
   function toggleTheme() {
     isLight = !isLight;
     document.body.classList.toggle('light', isLight);
